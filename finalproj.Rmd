@@ -62,6 +62,102 @@ cardata<-data.frame(cardata[,-10])
 ```
 
 ```{r}
+
+#visualizing the data
+#table(cardata$car_age)
+boxplot(cardata$car_age)
+barplot(table(cardata$car_age),
+main="Bar Chart of Years",
+xlab="Year",
+ylab="Count",
+border="red",
+col="blue",
+density=10
+)
+
+boxplot(cardata$selling_price,main="Selling Price boxplot")
+hist (cardata$selling_price, breaks=30, col="violet", xlab="Selling Price", main="Selling Price histogram")
+boxplot(log(cardata$selling_price))       
+#boxplot(scale(cardata$selling_price, center= TRUE, scale=TRUE),main="scaled Selling Price boxplot")       
+#boxplot(scale(log(cardata$selling_price), center= TRUE, scale=TRUE),main="scaled Selling Price boxplot")              
+        
+boxplot(cardata$km_driven)
+hist (cardata$km_driven, breaks=30, col="violet", xlab="Selling Price", main="km driven histogram")
+boxplot(log(cardata$km_driven)) 
+
+table(cardata$fuel)
+barplot(table(cardata$fuel),
+main="Bar Chart of Fuel",
+xlab="Fuel",
+ylab="Count",
+border="red",
+col="blue",
+density=10
+)
+
+barplot(table(cardata$seller_type),
+main="Bar Chart of Seller Type",
+xlab="Fuel",
+ylab="Count",
+border="red",
+col="blue",
+density=10
+)
+       
+
+
+barplot(table(cardata$transmission),
+main="Bar Chart of Transmission",
+xlab="Fuel",
+ylab="Count",
+border="red",
+col="blue",
+density=10
+)
+
+barplot(table(cardata$owner),
+main="Bar Chart of Owner",
+xlab="Fuel",
+ylab="Count",
+border="red",
+col="blue",
+density=10
+)
+       
+boxplot(cardata$mileage)
+hist (cardata$mileage, breaks=15, col="violet", xlab="Selling Price", main="Selling Price histogram")
+       
+barplot(table(cardata$seats),
+main="Bar Chart of Seats",
+xlab="Fuel",
+ylab="Count",
+border="red",
+col="blue",
+density=10
+)
+   
+
+barplot(table(cardata$max_power),
+main="Bar Chart of Max Power",
+xlab="Fuel",
+ylab="Count",
+border="red",
+col="blue",
+density=10
+)
+
+boxplot(cardata$max_power, center= TRUE, scale=TRUE,main="max power boxplot")
+
+# make correlation matrix
+cormat <- round(cor(cardata[c(1,2,7,8,9,10,11)]),4)
+head(cormat)
+#library(reshape2)
+#melted_cormat <- melt(cormat)
+#library(ggplot2)
+#ggplot(data=melted_cormat, aes(x=Var1,y=Var2,fill=value)) + geom+tile()
+```
+
+```{r}
 #remove rows where mileage is 0
 cardata<-cardata[!(cardata$mileage<0.001),]
 ```
@@ -82,6 +178,12 @@ scaledData <- cardata
 scaledData[c(1,2,7,8,9,10,11)] <- lapply(scaledData[c(1,2,7,8,9,10,11)], function(x) c(scale(x)))
 #checking the data after unit normal scaling
 summary(scaledData)
+```
+
+```{r}
+boxplot(scaledData$max_power, center= TRUE, scale=TRUE,main="log(max power) boxplot")
+boxplot(scaledData$selling_price, center= TRUE, scale=TRUE,main="log(selling price) boxplot")
+boxplot(scaledData$km_driven, center= TRUE, scale=TRUE,main="log(km driven) boxplot")
 ```
 
 ```{r}

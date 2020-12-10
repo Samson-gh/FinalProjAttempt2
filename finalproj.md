@@ -151,6 +151,198 @@ cardata<-data.frame(cardata[,-10])
 ```
 
 ``` r
+#visualizing the data
+#table(cardata$car_age)
+boxplot(cardata$car_age)
+```
+
+![](finalproj_files/figure-gfm/unnamed-chunk-9-1.png)<!-- -->
+
+``` r
+barplot(table(cardata$car_age),
+main="Bar Chart of Years",
+xlab="Year",
+ylab="Count",
+border="red",
+col="blue",
+density=10
+)
+```
+
+![](finalproj_files/figure-gfm/unnamed-chunk-9-2.png)<!-- -->
+
+``` r
+boxplot(cardata$selling_price,main="Selling Price boxplot")
+```
+
+![](finalproj_files/figure-gfm/unnamed-chunk-9-3.png)<!-- -->
+
+``` r
+hist (cardata$selling_price, breaks=30, col="violet", xlab="Selling Price", main="Selling Price histogram")
+```
+
+![](finalproj_files/figure-gfm/unnamed-chunk-9-4.png)<!-- -->
+
+``` r
+boxplot(log(cardata$selling_price))       
+```
+
+![](finalproj_files/figure-gfm/unnamed-chunk-9-5.png)<!-- -->
+
+``` r
+#boxplot(scale(cardata$selling_price, center= TRUE, scale=TRUE),main="scaled Selling Price boxplot")       
+#boxplot(scale(log(cardata$selling_price), center= TRUE, scale=TRUE),main="scaled Selling Price boxplot")              
+        
+boxplot(cardata$km_driven)
+```
+
+![](finalproj_files/figure-gfm/unnamed-chunk-9-6.png)<!-- -->
+
+``` r
+hist (cardata$km_driven, breaks=30, col="violet", xlab="Selling Price", main="km driven histogram")
+```
+
+![](finalproj_files/figure-gfm/unnamed-chunk-9-7.png)<!-- -->
+
+``` r
+boxplot(log(cardata$km_driven)) 
+```
+
+![](finalproj_files/figure-gfm/unnamed-chunk-9-8.png)<!-- -->
+
+``` r
+table(cardata$fuel)
+```
+
+    ## 
+    ##    CNG Diesel    LPG Petrol 
+    ##      0   4299      0   3521
+
+``` r
+barplot(table(cardata$fuel),
+main="Bar Chart of Fuel",
+xlab="Fuel",
+ylab="Count",
+border="red",
+col="blue",
+density=10
+)
+```
+
+![](finalproj_files/figure-gfm/unnamed-chunk-9-9.png)<!-- -->
+
+``` r
+barplot(table(cardata$seller_type),
+main="Bar Chart of Seller Type",
+xlab="Fuel",
+ylab="Count",
+border="red",
+col="blue",
+density=10
+)
+```
+
+![](finalproj_files/figure-gfm/unnamed-chunk-9-10.png)<!-- -->
+
+``` r
+barplot(table(cardata$transmission),
+main="Bar Chart of Transmission",
+xlab="Fuel",
+ylab="Count",
+border="red",
+col="blue",
+density=10
+)
+```
+
+![](finalproj_files/figure-gfm/unnamed-chunk-9-11.png)<!-- -->
+
+``` r
+barplot(table(cardata$owner),
+main="Bar Chart of Owner",
+xlab="Fuel",
+ylab="Count",
+border="red",
+col="blue",
+density=10
+)
+```
+
+![](finalproj_files/figure-gfm/unnamed-chunk-9-12.png)<!-- -->
+
+``` r
+boxplot(cardata$mileage)
+```
+
+![](finalproj_files/figure-gfm/unnamed-chunk-9-13.png)<!-- -->
+
+``` r
+hist (cardata$mileage, breaks=15, col="violet", xlab="Selling Price", main="Selling Price histogram")
+```
+
+![](finalproj_files/figure-gfm/unnamed-chunk-9-14.png)<!-- -->
+
+``` r
+barplot(table(cardata$seats),
+main="Bar Chart of Seats",
+xlab="Fuel",
+ylab="Count",
+border="red",
+col="blue",
+density=10
+)
+```
+
+![](finalproj_files/figure-gfm/unnamed-chunk-9-15.png)<!-- -->
+
+``` r
+barplot(table(cardata$max_power),
+main="Bar Chart of Max Power",
+xlab="Fuel",
+ylab="Count",
+border="red",
+col="blue",
+density=10
+)
+```
+
+![](finalproj_files/figure-gfm/unnamed-chunk-9-16.png)<!-- -->
+
+``` r
+boxplot(cardata$max_power, center= TRUE, scale=TRUE,main="max power boxplot")
+```
+
+![](finalproj_files/figure-gfm/unnamed-chunk-9-17.png)<!-- -->
+
+``` r
+# make correlation matrix
+cormat <- round(cor(cardata[c(1,2,7,8,9,10,11)]),4)
+head(cormat)
+```
+
+    ##               selling_price km_driven mileage  engine max_power   seats
+    ## selling_price        1.0000   -0.2223 -0.1254  0.4538    0.7494  0.0394
+    ## km_driven           -0.2223    1.0000 -0.1745  0.2089   -0.0358  0.2276
+    ## mileage             -0.1254   -0.1745  1.0000 -0.5789   -0.3736 -0.4539
+    ## engine               0.4538    0.2089 -0.5789  1.0000    0.7016  0.6101
+    ## max_power            0.7494   -0.0358 -0.3736  0.7016    1.0000  0.1883
+    ## seats                0.0394    0.2276 -0.4539  0.6101    0.1883  1.0000
+    ##               car_age
+    ## selling_price -0.4128
+    ## km_driven      0.4251
+    ## mileage       -0.3275
+    ## engine        -0.0174
+    ## max_power     -0.2280
+    ## seats          0.0082
+
+``` r
+#library(reshape2)
+#melted_cormat <- melt(cormat)
+#library(ggplot2)
+#ggplot(data=melted_cormat, aes(x=Var1,y=Var2,fill=value)) + geom+tile()
+```
+
+``` r
 #remove rows where mileage is 0
 cardata<-cardata[!(cardata$mileage<0.001),]
 ```
@@ -255,6 +447,24 @@ summary(scaledData)
     ##  Mean   : 0.0000  
     ##  3rd Qu.: 0.5161  
     ##  Max.   : 5.1728
+
+``` r
+boxplot(scaledData$max_power, center= TRUE, scale=TRUE,main="log(max power) boxplot")
+```
+
+![](finalproj_files/figure-gfm/unnamed-chunk-13-1.png)<!-- -->
+
+``` r
+boxplot(scaledData$selling_price, center= TRUE, scale=TRUE,main="log(selling price) boxplot")
+```
+
+![](finalproj_files/figure-gfm/unnamed-chunk-13-2.png)<!-- -->
+
+``` r
+boxplot(scaledData$km_driven, center= TRUE, scale=TRUE,main="log(km driven) boxplot")
+```
+
+![](finalproj_files/figure-gfm/unnamed-chunk-13-3.png)<!-- -->
 
 ``` r
 #test train split
@@ -407,25 +617,25 @@ confint(select.mod.scaledData)
 plot(select.mod.scaledData, which=1, col=c("blue")) # Residuals vs Fitted Plot
 ```
 
-![](finalproj_files/figure-gfm/unnamed-chunk-15-1.png)<!-- -->
+![](finalproj_files/figure-gfm/unnamed-chunk-17-1.png)<!-- -->
 
 ``` r
 plot(select.mod.scaledData, which=2, col=c("red"))  # Q-Q Plot
 ```
 
-![](finalproj_files/figure-gfm/unnamed-chunk-15-2.png)<!-- -->
+![](finalproj_files/figure-gfm/unnamed-chunk-17-2.png)<!-- -->
 
 ``` r
 plot(select.mod.scaledData, which=3, col=c("blue"))  # Scale-Location Plot
 ```
 
-![](finalproj_files/figure-gfm/unnamed-chunk-15-3.png)<!-- -->
+![](finalproj_files/figure-gfm/unnamed-chunk-17-3.png)<!-- -->
 
 ``` r
 plot(select.mod.scaledData, which=5, col=c("blue"))  # Residuals vs Leverage
 ```
 
-![](finalproj_files/figure-gfm/unnamed-chunk-15-4.png)<!-- -->
+![](finalproj_files/figure-gfm/unnamed-chunk-17-4.png)<!-- -->
 
 ``` r
 cooksd <- cooks.distance(select.mod.scaledData)
@@ -459,7 +669,7 @@ abline(h = 4/nrow(train_data), col="red")  # add cutoff line
 text(x=1:length(cooksd)+1, y=cooksd, labels=ifelse(cooksd>4/nrow(train_data), names(cooksd),""), col="red")  # add labels
 ```
 
-![](finalproj_files/figure-gfm/unnamed-chunk-16-1.png)<!-- -->
+![](finalproj_files/figure-gfm/unnamed-chunk-18-1.png)<!-- -->
 
 ``` r
 influential <- as.numeric(names(cooksd)[(cooksd > 4 * mean(cooksd, na.rm = TRUE))]) 
@@ -758,25 +968,25 @@ kappa(model.outlier8129removed)
 plot(model.outlier8129removed, which=1, col=c("blue")) # Residuals vs Fitted Plot
 ```
 
-![](finalproj_files/figure-gfm/unnamed-chunk-21-1.png)<!-- -->
+![](finalproj_files/figure-gfm/unnamed-chunk-23-1.png)<!-- -->
 
 ``` r
 plot(model.outlier8129removed, which=2, col=c("red"))  # Q-Q Plot
 ```
 
-![](finalproj_files/figure-gfm/unnamed-chunk-21-2.png)<!-- -->
+![](finalproj_files/figure-gfm/unnamed-chunk-23-2.png)<!-- -->
 
 ``` r
 plot(model.outlier8129removed, which=3, col=c("blue"))  # Scale-Location Plot
 ```
 
-![](finalproj_files/figure-gfm/unnamed-chunk-21-3.png)<!-- -->
+![](finalproj_files/figure-gfm/unnamed-chunk-23-3.png)<!-- -->
 
 ``` r
 plot(model.outlier8129removed, which=5, col=c("blue"))  # Residuals vs Leverage
 ```
 
-![](finalproj_files/figure-gfm/unnamed-chunk-21-4.png)<!-- -->
+![](finalproj_files/figure-gfm/unnamed-chunk-23-4.png)<!-- -->
 
 ``` r
 #stepwise bidirectional variable selection
@@ -999,19 +1209,19 @@ selectmodelpreds<-predict(select.mod.outlier8129removed,test_data)
 plot(test_data$selling_price,Noenginepreds,abline(c(0,1)), xlab = "actual", ylab = "predicted")
 ```
 
-![](finalproj_files/figure-gfm/unnamed-chunk-25-1.png)<!-- -->
+![](finalproj_files/figure-gfm/unnamed-chunk-27-1.png)<!-- -->
 
 ``` r
 plot(test_data$selling_price,fullmodelpreds,abline(c(0,1)), xlab = "actual", ylab = "predicted")
 ```
 
-![](finalproj_files/figure-gfm/unnamed-chunk-25-2.png)<!-- -->
+![](finalproj_files/figure-gfm/unnamed-chunk-27-2.png)<!-- -->
 
 ``` r
 plot(test_data$selling_price,selectmodelpreds,abline(c(0,1)), xlab = "actual", ylab = "predicted")
 ```
 
-![](finalproj_files/figure-gfm/unnamed-chunk-25-3.png)<!-- -->
+![](finalproj_files/figure-gfm/unnamed-chunk-27-3.png)<!-- -->
 
 ``` r
 RMSE1<-sqrt(sum((Noenginepreds-test_data$selling_price)^2)/length(Noenginepreds))
